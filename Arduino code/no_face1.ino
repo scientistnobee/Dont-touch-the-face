@@ -126,6 +126,7 @@ void setup() {
     NRF_POWER->GPREGRET = 0x01;
     sd_nvic_SystemReset();
   }
+  wdt_enable(10000);
   pinMode(2, INPUT);
   pinMode(26, OUTPUT);
   pinMode(25, OUTPUT);
@@ -159,7 +160,7 @@ void setup() {
 
 }
 void loop() {
-   wdt_reset();
+  if (digitalRead(BUTTON_PIN) ) wdt_reset();
   if (sleeping) {
     sd_app_evt_wait();
     sd_nvic_ClearPendingIRQ(SD_EVT_IRQn);
